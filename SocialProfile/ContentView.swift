@@ -13,19 +13,21 @@ import SwiftUI
 // ISSO É A VIEW ---
 struct ContentView: View {
     
-    @State var viewModel = ContentViewModel()
+    //inicia com stateObject
+    @StateObject var viewModel = ContentViewModel()
     
     var body: some View {
         VStack {
-            ProfileDataView(viewModel: $viewModel)
-            ActionView(viewModel: $viewModel)
+            ProfileDataView(viewModel: viewModel)
+            ActionView(viewModel: viewModel)
         }
     }
 }
 
 struct ProfileDataView: View {
     
-    @Binding var viewModel: ContentViewModel
+    //propaga os valores com observedObject
+    @ObservedObject var viewModel: ContentViewModel
     
     var body: some View {
         //Perfil ---
@@ -63,7 +65,7 @@ struct ProfileDataView: View {
 
 struct ActionView: View {
     
-    @Binding var viewModel: ContentViewModel
+    @ObservedObject var viewModel: ContentViewModel
     
     var body: some View {
         VStack {
