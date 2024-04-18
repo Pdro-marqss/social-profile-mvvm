@@ -16,7 +16,7 @@ struct ContentViewModel {
     
     var user = User(name: "Pedro Marques",
                     nick: "@Pdro-marqss",
-                    followers: 22645)
+                    followers: 1436)
     
     init() {
         loadFollowers()
