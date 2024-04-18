@@ -7,28 +7,11 @@
 
 import SwiftUI
 
-// ISSO É A MODEL ---
-struct User {
-    var name: String
-    var nick: String
-    var followers: Double
-}
-
-//ISSO É A VIEWMODEL ---
-//Todo codigo que nao esta diretamente relacionado a construçao de uma interface, vem pra ca
-struct ContentViewModel {
-    
-    var user = User(name: "Pedro Marques",
-                    nick: "@Pdro-marqss",
-                    followers: 22645)
-}
-
 
 // ISSO É A VIEW ---
 struct ContentView: View {
     
-    @State private var isFollowing = false
-    var viewModel = ContentViewModel()
+    @State var viewModel = ContentViewModel()
     
     var body: some View {
         VStack {
@@ -59,7 +42,7 @@ struct ContentView: View {
                 .font(.title3)
                 .foregroundStyle(.secondary)
             
-            Text("\(viewModel.user.followers)K")
+            Text(viewModel.userFollowers)
                 .font(.system(size: 80, weight: .light))
                 .padding(40)
             
@@ -67,16 +50,19 @@ struct ContentView: View {
             VStack {
                 //Seguir ---
                 Button(action: {
-                    print("botao precionado")
+                    viewModel.followToogle()
                 }) {
-                    Label("Follow", systemImage: "person.fill.badge.plus")
+                    Label(!viewModel.isFollowing ? "Follow" : "Unfollow", systemImage: "person.fill.badge.plus")
                         .font(.title3)
                         .frame(maxWidth: .infinity)
-                        .foregroundStyle(.white)
-                        .padding()
-                        .background(.blue)
-                        .clipShape(.rect(cornerRadius: 8))
+//                        .foregroundStyle(.white)
+//                        .padding()
+//                        .background(.blue)
+//                        .clipShape(.rect(cornerRadius: 8))
                 }
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .tint(!viewModel.isFollowing ? .blue : .indigo)
                 
                 //Enviar mensagem ---
                 Button(action: {
@@ -85,18 +71,20 @@ struct ContentView: View {
                     Label("Enviar Mensagem", systemImage: "paperplane.fill")
                         .font(.title3)
                         .frame(maxWidth: .infinity)
-                        .foregroundStyle(.white)
-                        .padding()
-                        .background(buttonColor)
-                        .clipShape(.rect(cornerRadius: 8))
-                        .disabled(isFollowing)
+//                        .foregroundStyle(.white)
+//                        .padding()
+//                        .background(buttonColor)
+//                        .clipShape(.rect(cornerRadius: 8))
+                        
                 }
-                
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .disabled(!viewModel.isFollowing)
             }
             .padding()
             
             var buttonColor: Color {
-                return isFollowing ? .blue : .gray
+                return viewModel.isFollowing ? .blue : .gray
             }
         }
     }
